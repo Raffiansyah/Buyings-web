@@ -63,6 +63,7 @@ export default function Header() {
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem><Link href={'/dashboard'}>Dashboard</Link></DropdownMenuItem>
+              <DropdownMenuSeparator />
               <DropdownMenuItem><Button type='button' variant={'ghost'} onClick={onSubmit}>Sign Out</Button></DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
