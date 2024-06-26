@@ -6,6 +6,7 @@ import {
   CardFooter,
   CardHeader,
 } from '~/components/ui/card';
+import { formatPrice } from '~/utils';
 
 export default async function Sneakers() {
   const products = await getProducts();
@@ -24,10 +25,10 @@ export default async function Sneakers() {
             />
           </CardHeader>
           <CardContent>
-            <p>{product.title}</p>
+            <p className='font-bold'>{product.title}</p>
           </CardContent>
           <CardFooter>
-            <p>{product.prices}</p>
+            <p className='font-semibold text-green-800'>{formatPrice(Number(product.prices))}</p>
           </CardFooter>
         </Card>
       ))}
