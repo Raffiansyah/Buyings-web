@@ -5,7 +5,7 @@ export const userSignin = async (email: string, password: string) => {
     const user = await axiosClient.post('/login', { email, password });
     return user;
   } catch (error) {
-    return error;
+    console.log(error)
   }
 };
 export const userSignup = async (
@@ -24,7 +24,7 @@ export const userSignup = async (
       password,
     });
   } catch (error) {
-    return error;
+    console.log(error)
   }
 };
 
@@ -32,6 +32,6 @@ export const userSignout = async () => {
   try {
     const user = await axiosClient.post('/logout');
   } catch (error) {
-    return error;
+    console.log(error)
   }
 };

@@ -28,7 +28,7 @@ export default function Header() {
   }
 
   return (
-    <nav className="sticky top-0 z-50 border-b">
+    <nav className="sticky top-0 z-50 border-b bg-white">
       <MaxWitdthWrapper className="py-1.5 flex justify-between text-center items-center">
         <div>
           <Link href={'/'} className="flex gap-x-1">
