@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { cn } from "~/utils/utils";
+import { cn } from "~/lib/utils";
 
 export default function MaxWitdthWrapper({
     children,
