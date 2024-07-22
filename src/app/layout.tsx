@@ -3,7 +3,8 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import Header from '~/components/layouts/Header';
 import { StoreProvider } from '~/store/(provider)/StoreProvider';
-
+import { TanstackProvider } from '~/components/TanstackProvide';
+import { Toaster } from '~/components/ui/toaster';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -15,7 +16,6 @@ export const metadata: Metadata = {
   creator: 'Mohammad Raffiansyah',
   publisher: 'Mohammad Raffiansyah',
 };
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -25,8 +25,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <StoreProvider>
-          <Header />
-          {children}
+          <TanstackProvider>
+            <Header />
+            <main>{children}</main>
+            <Toaster />
+          </TanstackProvider>
         </StoreProvider>
       </body>
     </html>

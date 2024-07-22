@@ -1,11 +1,12 @@
-'use client';
+'use client'
+
 import Image from 'next/image';
 import MaxWitdthWrapper from '../MaxWidthWrapper';
 import Link from 'next/link';
 import { Button } from '../ui/button';
 import { Search, ShoppingCart } from 'lucide-react';
 import DefaultAvatars from './DefaultAvatars';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,17 +15,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
-import { userSignout } from '~/hooks/useUsers';
-import { signoutUser } from '~/store/(slice)/userSlice';
+import { useSignOut } from '~/service/mutation';
 
 export default function Header() {
-  const dispatch = useDispatch();
+  const signOutMutation = useSignOut();
   const { data } = useSelector((state: any) => state.user);
   const initialUsername = data?.user_metadata?.username?.charAt(0);
 
-  async function onSubmit() {
-    const user = await userSignout()
-    dispatch(signoutUser())
+  function handleSignout() {
+    signOutMutation.mutate();
   }
 
   return (
@@ -60,11 +59,21 @@ export default function Header() {
                 <DefaultAvatars initialUsername={initialUsername} />
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem><Link href={'/dashboard'}>Dashboard</Link></DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem><Button type='button' variant={'ghost'} onClick={onSubmit}>Sign Out</Button></DropdownMenuItem>
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <Link href={'/dashboard'}>Dashboard</Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <Button
+                    type="button"
+                    variant={'ghost'}
+                    onClick={handleSignout}
+                  >
+                    Sign Out
+                  </Button>
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (

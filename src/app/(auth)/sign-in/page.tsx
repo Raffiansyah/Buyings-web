@@ -1,11 +1,9 @@
-'use client';
+'use client'
 
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useDispatch } from 'react-redux';
-import { useRouter } from 'next/navigation';
 import { Button } from '~/components/ui/button';
 import {
   Form,
@@ -15,13 +13,12 @@ import {
   FormMessage,
 } from '~/components/ui/form';
 import { Input } from '~/components/ui/input';
-import { signInSchema } from '~/lib/validator/SignIn-Form';
-import { userSignin } from '~/hooks/useUsers';
-import { registerUser } from '~/store/(slice)/userSlice';
+import { signInSchema } from '~/service/validator/SignIn-Form';
+import { useSignIn } from '~/service/mutation';
 
 export default function Signin() {
-  const dispatch = useDispatch();
-  const { push } = useRouter();
+  const signInMutation = useSignIn();
+
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
@@ -29,14 +26,9 @@ export default function Signin() {
       password: '',
     },
   });
+
   async function onSubmit(values: z.infer<typeof signInSchema>) {
-    try {
-      const user: any = await userSignin(values.email, values.password);
-      dispatch(registerUser(user.data.data));
-      push('/');
-    } catch (error) {
-      console.log(error);
-    }
+    signInMutation.mutateAsync({ email: values.email, password: values.password });
   }
 
   return (
@@ -82,4 +74,3 @@ export default function Signin() {
     </div>
   );
 }
-

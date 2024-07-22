@@ -12,13 +12,12 @@ import {
   FormItem,
   FormMessage,
 } from '~/components/ui/form';
-import { signUpSchema } from '~/lib/validator/SignUp-Forms';
-import { userSignup } from '~/hooks/useUsers';
-import { useRouter } from 'next/navigation';
+import { signUpSchema } from '~/service/validator/SignUp-Forms';
 import { Button } from '~/components/ui/button';
+import { useSignUp } from '~/service/mutation';
 
 export default function SignUp() {
-  const { push } = useRouter();
+  const signUpMutation = useSignUp();
   const form = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -30,18 +29,13 @@ export default function SignUp() {
     },
   });
   async function onSubmit(values: z.infer<typeof signUpSchema>) {
-    try {
-      const user: any = await userSignup(
-        values.email,
-        values.firstName,
-        values.lastName,
-        values.username,
-        values.password
-      );
-      push('/sign-in');
-    } catch (error) {
-      console.log(error)
-    }
+    signUpMutation.mutateAsync({
+      email: values.email,
+      firstName: values.firstName,
+      lastName: values.lastName,
+      password: values.password,
+      username: values.username,
+    });
   }
   return (
     <div className="py-10 px-5 space-y-3 mt-12">
@@ -116,7 +110,7 @@ export default function SignUp() {
               </FormItem>
             )}
           />
-          <Button type='submit'>Submit</Button>
+          <Button type="submit">Submit</Button>
         </form>
       </Form>
     </div>

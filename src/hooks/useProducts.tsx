@@ -1,4 +1,4 @@
-import { axiosClient } from "~/lib/axios"
+import { axiosClient } from "~/lib/api"
 
 export const getProducts = async (sortBy = '') => {
     try {

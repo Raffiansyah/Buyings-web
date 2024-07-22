@@ -1,7 +1,7 @@
 'use client';
 
 import { getProducts } from '~/hooks/useProducts';
-import { productType } from '~/lib/type';
+import { productType } from '~/utils/type';
 import CardComponent from '~/components/layouts/CardComponent';
 import Combobox from '~/components/layouts/Combobox';
 import { useEffect, useState } from 'react';
