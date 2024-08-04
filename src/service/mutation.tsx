@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { registerUser, signoutUser } from '~/store/(slice)/userSlice';
 import { useToast } from '~/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
+import { setCookie, deleteCookie } from 'cookies-next'
 
 export function useSignIn() {
   const dispatch = useDispatch();
@@ -16,25 +17,20 @@ export function useSignIn() {
       return SignIn(data);
     },
     onSuccess: (user) => {
-      const userData = JSON.parse(JSON.stringify(user.data.data)); // Ensure plain object
-
-      if (userData && typeof userData === 'object') {
-        dispatch(registerUser(userData));
+      const { data } = user
+      setCookie('accessToken', data.accessToken)
+      dispatch(registerUser(data.data));
         push('/');
         toast({
           title: 'SignIn Success',
-          description: `Welcome ${userData.user_metadata.username}`,
+          description: `Welcome ${data.data.user_metadata.username}`,
         });
-      } else {
-        console.error('Invalid userData format:', userData);
-      }
     },
     onError: (error) => {
-      console.error('SignIn Error:', error); // Logging error
       toast({
         variant: 'destructive',
-        title: 'Something went wrong',
-        description: `Invalid Credentials`,
+        title: `Something went wrong`,
+        description: `${error.response.data.message}`,
       });
     },
   });
@@ -56,11 +52,10 @@ export function useSignUp() {
       });
     },
     onError: (error) => {
-      console.error('SignUp Error:', error); // Logging error
       toast({
         variant: 'destructive',
         title: 'Something went wrong',
-        description: 'try again later',
+        description: `${error.response.data.message}`,
       });
     },
   });
@@ -76,16 +71,16 @@ export function useSignOut() {
     },
     onSuccess: () => {
       dispatch(signoutUser());
+      deleteCookie('accessToken')
       toast({
         title: 'Goodbye!!',
       });
     },
     onError: (error) => {
-      console.error('SignOut Error:', error); // Logging error
       toast({
         variant: 'destructive',
         title: 'Something went wrong',
-        description: 'try again later',
+        description: `${error.response.data.message}`,
       });
     },
   });
