@@ -5,7 +5,8 @@ import { useDispatch } from 'react-redux';
 import { registerUser, signoutUser } from '~/store/(slice)/userSlice';
 import { useToast } from '~/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
-import { setCookie, deleteCookie } from 'cookies-next'
+import { setCookie, deleteCookie } from 'cookies-next';
+import axios from 'axios';
 
 export function useSignIn() {
   const dispatch = useDispatch();
@@ -17,28 +18,30 @@ export function useSignIn() {
       return SignIn(data);
     },
     onSuccess: (user) => {
-      const { data } = user
-      setCookie('accessToken', data.accessToken)
+      const { data } = user;
+      setCookie('accessToken', data.accessToken);
       dispatch(registerUser(data.data));
-        push('/');
-        toast({
-          title: 'SignIn Success',
-          description: `Welcome ${data.data.user_metadata.username}`,
-        });
+      push('/');
+      toast({
+        title: 'SignIn Success',
+        description: `Welcome ${data.data.user_metadata.username}`,
+      });
     },
     onError: (error) => {
-      toast({
-        variant: 'destructive',
-        title: `Something went wrong`,
-        description: `${error.response.data.message}`,
-      });
+      if (axios.isAxiosError(error)) {
+        toast({
+          variant: 'destructive',
+          title: `Something went wrong`,
+          description: `${error.response?.data.message}`,
+        });
+      }
     },
   });
 }
 
 export function useSignUp() {
   const { toast } = useToast();
-  const { push } = useRouter()
+  const { push } = useRouter();
 
   return useMutation({
     mutationFn: (data: SignupData) => {
@@ -52,11 +55,13 @@ export function useSignUp() {
       });
     },
     onError: (error) => {
-      toast({
-        variant: 'destructive',
-        title: 'Something went wrong',
-        description: `${error.response.data.message}`,
-      });
+      if (axios.isAxiosError(error)) {
+        toast({
+          variant: 'destructive',
+          title: `Something went wrong`,
+          description: `${error.response?.data.message}`,
+        });
+      }
     },
   });
 }
@@ -71,17 +76,19 @@ export function useSignOut() {
     },
     onSuccess: () => {
       dispatch(signoutUser());
-      deleteCookie('accessToken')
+      deleteCookie('accessToken');
       toast({
         title: 'Goodbye!!',
       });
     },
     onError: (error) => {
-      toast({
-        variant: 'destructive',
-        title: 'Something went wrong',
-        description: `${error.response.data.message}`,
-      });
+      if (axios.isAxiosError(error)) {
+        toast({
+          variant: 'destructive',
+          title: `Something went wrong`,
+          description: `${error.response?.data.message}`,
+        });
+      }
     },
   });
 }
