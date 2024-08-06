@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { SignInData, SignupData } from '../utils/type';
-import { SignIn, SignOut, SignUp } from '~/lib/api';
+import { SignIn, SignOut, SignUp, verifyOTP } from '~/lib/api';
 import { useDispatch } from 'react-redux';
 import { registerUser, signoutUser } from '~/store/(slice)/userSlice';
 import { useToast } from '~/components/ui/use-toast';
@@ -31,7 +31,7 @@ export function useSignIn() {
       if (axios.isAxiosError(error)) {
         toast({
           variant: 'destructive',
-          title: `Something went wrong`,
+          title: `Sign in Failed`,
           description: `${error.response?.data.message}`,
         });
       }
@@ -48,17 +48,17 @@ export function useSignUp() {
       return SignUp(data);
     },
     onSuccess: () => {
-      push('/sign-in');
+      push('/auth/sign-in');
       toast({
         title: 'SignUp Success',
-        description: 'try to signin',
+        description: 'please check your email for verification',
       });
     },
     onError: (error) => {
       if (axios.isAxiosError(error)) {
         toast({
           variant: 'destructive',
-          title: `Something went wrong`,
+          title: `SignUp Failed`,
           description: `${error.response?.data.message}`,
         });
       }
@@ -85,10 +85,37 @@ export function useSignOut() {
       if (axios.isAxiosError(error)) {
         toast({
           variant: 'destructive',
-          title: `Something went wrong`,
+          title: `SignOut Failed`,
           description: `${error.response?.data.message}`,
         });
       }
     },
   });
+}
+
+export function useVerify() {
+  const { toast } = useToast();
+  const { push } = useRouter();
+
+  return useMutation({
+    mutationFn: (hashToken: string) => {
+      return verifyOTP(hashToken);
+    },
+    onSuccess: () => {
+      push('/auth/sign-in');
+      toast({
+        title: 'Verify Success',
+        description: 'Account successfully confirmed! You can log in now',
+      });
+    },
+    onError: (error) => {
+      if (axios.isAxiosError(error)) {
+        toast({
+          variant: 'destructive',
+          title: `Verify Failed`,
+          description: `${error.response?.data.message}`,
+        });
+      }
+    },
+  })
 }

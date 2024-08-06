@@ -77,7 +77,7 @@ export default function Header() {
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <Link href="/sign-in">Sign-In</Link>
+            <Link href="/auth/sign-in">Sign-In</Link>
           )}
         </div>
       </MaxWitdthWrapper>

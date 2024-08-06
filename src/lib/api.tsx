@@ -7,15 +7,14 @@ export const axiosClient = axios.create({
   baseURL: BASE_URL,
 });
 
-
-export const SignIn = async ({email, password}: SignInData) => {
+export const SignIn = async ({ email, password }: SignInData) => {
   try {
-    const user = axiosClient.post('/login', {email, password})
-    return user
+    const user = axiosClient.post('/login', { email, password });
+    return user;
   } catch (error) {
-    throw new Error('invalid Credentials')
+    throw new Error('invalid Credentials');
   }
-}
+};
 
 export const SignUp = async (data: SignupData) => {
   try {
@@ -25,26 +24,34 @@ export const SignUp = async (data: SignupData) => {
       last_name: data.lastName,
       username: data.username,
       password: data.password,
-    })
-    return 'Success To SignUp'
+    });
+    return 'Success To SignUp';
   } catch (error) {
-    throw new Error('Something Error')
+    throw new Error('Something Error');
   }
-}
+};
 
 export const SignOut = async () => {
   try {
     const user = await axiosClient.post('/logout');
   } catch (error) {
-    throw new Error('Something Error')
+    throw new Error('Something Error');
   }
 };
 
 export const getProducts = async (sortBy = '') => {
   try {
-      const products = await axiosClient.get(`/products?sort_by=${sortBy}`)
-      return products.data.products
+    const products = await axiosClient.get(`/products?sort_by=${sortBy}`);
+    return products.data.products;
   } catch (error) {
-      console.log(error)
+    throw new Error('Something Error');
   }
-}
+};
+
+export const verifyOTP = async (hashToken: string) => {
+  try {
+    const verify = await axiosClient.post('/user/verifyOTP', { hashToken });
+  } catch (error) {
+    throw new Error('Something Error');
+  }
+};
