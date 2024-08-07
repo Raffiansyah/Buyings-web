@@ -68,7 +68,7 @@ export default function Header() {
                 <DropdownMenuItem>
                   <Button
                     type="button"
-                    variant={'ghost'}
+                    variant={'destructive'}
                     onClick={handleSignout}
                   >
                     Sign Out
