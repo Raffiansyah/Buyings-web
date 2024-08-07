@@ -13,7 +13,7 @@ export default function Confirm()  {
     const token = urlParams.get('token_hash') || '';
     setAccessToken(token);
     verifyOtpMutation.mutateAsync(token)
-  }, [accessToken, verifyOtpMutation]);
+  }, [accessToken]);
 
   return (
     <div>
