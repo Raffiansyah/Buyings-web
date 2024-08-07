@@ -43,7 +43,7 @@ export default function SignUp() {
         <h1 className="text-xl font-medium">Sign-Up</h1>
         <p className="text-muted-foreground">
           Already have an account?{' '}
-          <Link href={'/sign-in'} className="text-black">
+          <Link href={'/auth/sign-in'} className="text-black">
             Sign-In Here
           </Link>
         </p>
