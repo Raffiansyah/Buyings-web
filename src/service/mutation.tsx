@@ -18,17 +18,18 @@ export function useSignIn() {
       return SignIn(data);
     },
     onSuccess: (user) => {
-      const { data } = user;
-      setCookie('accessToken', data.accessToken);
-      dispatch(registerUser(data.data));
-      push('/');
+      const userData = user;
+      setCookie('accessToken', userData?.data.accessToken);
+      dispatch(registerUser(userData?.data.data));
       toast({
         title: 'SignIn Success',
-        description: `Welcome ${data.data.user_metadata.username}`,
+        description: `Welcome ${userData?.data.data.user_metadata.username}`,
       });
+      push('/');
     },
     onError: (error) => {
       if (axios.isAxiosError(error)) {
+        console.log(error)
         toast({
           variant: 'destructive',
           title: `Sign in Failed`,
@@ -48,14 +49,15 @@ export function useSignUp() {
       return SignUp(data);
     },
     onSuccess: () => {
-      push('/auth/sign-in');
       toast({
         title: 'SignUp Success',
         description: 'please check your email for verification',
       });
+      push('/auth/sign-in');
     },
     onError: (error) => {
       if (axios.isAxiosError(error)) {
+        console.log(error)
         toast({
           variant: 'destructive',
           title: `SignUp Failed`,
@@ -83,6 +85,7 @@ export function useSignOut() {
     },
     onError: (error) => {
       if (axios.isAxiosError(error)) {
+        console.log(error)
         toast({
           variant: 'destructive',
           title: `SignOut Failed`,
@@ -102,11 +105,11 @@ export function useVerify() {
       return verifyOTP(hashToken);
     },
     onSuccess: () => {
-      push('/auth/sign-in');
       toast({
         title: 'Verify Success',
         description: 'Account successfully confirmed! You can log in now',
       });
+      push('/auth/sign-in');
     },
     onError: (error) => {
       if (axios.isAxiosError(error)) {
@@ -115,7 +118,8 @@ export function useVerify() {
           title: `Verify Failed`,
           description: `${error.response?.data.message}`,
         });
+        push('/auth/sign-in')
       }
     },
-  })
+  });
 }

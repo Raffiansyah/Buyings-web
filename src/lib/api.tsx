@@ -1,57 +1,33 @@
-import axios from 'axios';
 import { SignInData, SignupData } from '../utils/type';
-
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
-
-export const axiosClient = axios.create({
-  baseURL: BASE_URL,
-});
+import { axiosClient } from './axios';
 
 export const SignIn = async ({ email, password }: SignInData) => {
-  try {
-    const user = axiosClient.post('/login', { email, password });
-    return user;
-  } catch (error) {
-    throw new Error('invalid Credentials');
-  }
+  const user = axiosClient.post('/login', { email, password });
+  return user;
 };
 
 export const SignUp = async (data: SignupData) => {
-  try {
-    const newUser = axiosClient.post('/register', {
-      email: data.email,
-      first_name: data.firstName,
-      last_name: data.lastName,
-      username: data.username,
-      password: data.password,
-    });
-    return 'Success To SignUp';
-  } catch (error) {
-    throw new Error('Something Error');
-  }
+  const newUser = axiosClient.post('/register', {
+    email: data.email,
+    first_name: data.firstName,
+    last_name: data.lastName,
+    username: data.username,
+    password: data.password,
+  });
+  return newUser;
 };
 
 export const SignOut = async () => {
-  try {
-    const user = await axiosClient.post('/logout');
-  } catch (error) {
-    throw new Error('Something Error');
-  }
+  const user = await axiosClient.post('/logout');
+  return user;
 };
 
 export const getProducts = async (sortBy = '') => {
-  try {
-    const products = await axiosClient.get(`/products?sort_by=${sortBy}`);
-    return products.data.products;
-  } catch (error) {
-    throw new Error('Something Error');
-  }
+  const products = await axiosClient.get(`/products?sort_by=${sortBy}`);
+  return products.data.products;
 };
 
 export const verifyOTP = async (hashToken: string) => {
-  try {
-    const verify = await axiosClient.post('/user/verifyOTP', { hashToken });
-  } catch (error) {
-    throw new Error('Something Error');
-  }
+  const verify = await axiosClient.post('/user/verifyOTP', { hashToken });
+  return verify;
 };
