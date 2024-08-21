@@ -1,20 +1,20 @@
 import { NextResponse, NextRequest } from 'next/server';
-import jwt from 'jsonwebtoken';
+import { jwtVerify } from 'jose';
 
-export function authMiddleware(req: NextRequest) {
+export async function authMiddleware(req: NextRequest) {
   const token = req.cookies.get('accessToken')?.value || '';
   const secretKey = process.env.SUPABASE_SECRET || '';
 
   try {
-    if(token) {
-      jwt.verify(token, secretKey);
-      return NextResponse.next()
+    if (token) {
+      await jwtVerify(token, new TextEncoder().encode(secretKey));
+      return NextResponse.next();
     } else {
-      console.log('No Token, Access Denied')
+      console.log('No Token, Access Denied');
       return NextResponse.redirect(new URL('/auth/sign-in', req.url));
     }
   } catch (error) {
-    console.log('Invalid Token, Access Denied')
+    console.log('Invalid Token, Access Denied');
     return NextResponse.redirect(new URL('/auth/sign-in', req.url));
   }
 }
