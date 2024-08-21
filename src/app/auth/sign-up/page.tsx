@@ -17,7 +17,7 @@ import { Button } from '~/components/ui/button';
 import { useSignUp } from '~/service/mutation';
 
 export default function SignUp() {
-  const signUpMutation = useSignUp();
+  const { mutateAsync: signUpMutation, isPending } = useSignUp();
   const form = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -29,7 +29,7 @@ export default function SignUp() {
     },
   });
   async function onSubmit(values: z.infer<typeof signUpSchema>) {
-    signUpMutation.mutateAsync({
+    signUpMutation({
       email: values.email,
       firstName: values.firstName,
       lastName: values.lastName,
@@ -110,7 +110,7 @@ export default function SignUp() {
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <Button type="submit" disabled={isPending}>{isPending ? 'Loading' : 'Submit'}</Button>
         </form>
       </Form>
     </div>
