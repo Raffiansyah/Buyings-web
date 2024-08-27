@@ -1,11 +1,11 @@
-'use client'
+'use client';
 
 import Image from 'next/image';
 import MaxWitdthWrapper from '../MaxWidthWrapper';
 import Link from 'next/link';
 import { Button } from '../ui/button';
 import { Search, ShoppingCart } from 'lucide-react';
-import DefaultAvatars from './DefaultAvatars';
+import Avatars from './Avatars';
 import { useSelector } from 'react-redux';
 import {
   DropdownMenu,
@@ -21,6 +21,7 @@ export default function Header() {
   const signOutMutation = useSignOut();
   const { data } = useSelector((state: any) => state.user);
   const initialUsername = data?.user_metadata?.username?.charAt(0);
+  const avatarPath = data?.user_metadata?.avatar_url;
 
   function handleSignout() {
     signOutMutation.mutate();
@@ -56,7 +57,10 @@ export default function Header() {
           {data ? (
             <DropdownMenu>
               <DropdownMenuTrigger>
-                <DefaultAvatars initialUsername={initialUsername} />
+                <Avatars
+                  initialUsername={initialUsername}
+                  avatarPath={avatarPath}
+                />
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>

@@ -14,7 +14,7 @@ export default function CardComponent(props: propTypes) {
     <Card key={product.id} className="flex flex-col gap-y-5">
       <CardHeader>
         <Image
-          src={`${imageUrl}${product.images}`}
+          src={`${imageUrl}/ProductImages/${product.images}`}
           alt="Products images"
           width={154}
           height={154}
