@@ -14,11 +14,11 @@ export async function authMiddleware(req: NextRequest) {
       return NextResponse.redirect(new URL('/auth/sign-in', req.url));
     }
   } catch (error) {
-    console.log('Invalid Token, Access Denied');
+    console.log('Invalid Token, Access Denied', error);
     return NextResponse.redirect(new URL('/auth/sign-in', req.url));
   }
 }
 
 export const config = {
-  matcher: ['/user'],
+  matcher: ['/user/:path*'],
 };

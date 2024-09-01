@@ -4,12 +4,13 @@ import Image from 'next/image';
 import MaxWitdthWrapper from '../MaxWidthWrapper';
 import Link from 'next/link';
 import { Button } from '../ui/button';
-import { Search, ShoppingCart } from 'lucide-react';
+import { LogOut, Search, ShoppingBag, ShoppingCart, User } from 'lucide-react';
 import Avatars from './Avatars';
 import { useSelector } from 'react-redux';
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -63,20 +64,38 @@ export default function Header() {
                 />
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuLabel>
+                  <div className="flex items-center justify-start gap-2 p-2">
+                    <div className="flex flex-col space-y-1 leading-none">
+                      <p className="text-sm font-medium">{data.email}</p>
+                      <p className="w-[200px] truncate text-xs text-muted-foreground">
+                        {data.user_metadata.username}
+                      </p>
+                    </div>
+                  </div>
+                </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <Link href={'/user'}>Dashboard</Link>
-                </DropdownMenuItem>
+                <DropdownMenuGroup>
+                  <DropdownMenuItem>
+                    <Link href={'/user/profile'} className='flex'>
+                      <User className="mr-2 h-4 w-4" aria-hidden="true" />
+                      Profile
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link href={'/user/orders'} className='flex'>
+                      <ShoppingBag
+                        className="mr-2 h-4 w-4"
+                        aria-hidden="true"
+                      />
+                      Orders
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <Button
-                    type="button"
-                    variant={'destructive'}
-                    onClick={handleSignout}
-                  >
-                    Sign Out
-                  </Button>
+                <DropdownMenuItem onClick={handleSignout}>
+                  <LogOut className="mr-2 h-4 w-4" aria-hidden="true" />
+                  Sign-Out
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
