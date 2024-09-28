@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
-import { SignInData, SignupData } from '../utils/type';
-import { SignIn, SignOut, SignUp, verifyOTP } from '~/lib/api';
+import { SignInData, SignupData, UpdateUserData } from '../utils/type';
+import { SignIn, SignOut, SignUp, UpdateUser, verifyOTP } from '~/lib/api';
 import { useDispatch } from 'react-redux';
 import { registerUser, signoutUser } from '~/store/(slice)/userSlice';
 import { useToast } from '~/components/ui/use-toast';
@@ -29,7 +29,7 @@ export function useSignIn() {
     },
     onError: (error) => {
       if (axios.isAxiosError(error)) {
-        console.log(error)
+        console.log(error);
         toast({
           variant: 'destructive',
           title: `Sign in Failed`,
@@ -57,7 +57,6 @@ export function useSignUp() {
     },
     onError: (error) => {
       if (axios.isAxiosError(error)) {
-        console.log(error)
         toast({
           variant: 'destructive',
           title: `SignUp Failed`,
@@ -68,9 +67,37 @@ export function useSignUp() {
   });
 }
 
+export function useUpdateUser() {
+  const dispatch = useDispatch();
+  const { toast } = useToast();
+
+  return useMutation({
+    mutationFn: (data: UpdateUserData) => {
+      return UpdateUser(data)
+    },
+    onSuccess: (user) => {
+      const userData = user
+      dispatch(registerUser(userData?.data.data))
+      toast({
+        title: 'Update User Success',
+      });
+    },
+    onError: (error) => {
+      if (axios.isAxiosError(error)) {
+        toast({
+          variant: 'destructive',
+          title: `Update User Failed`,
+          description: `${error.response?.data.message}`,
+        });
+      }
+    },
+  })
+}
+
 export function useSignOut() {
   const dispatch = useDispatch();
   const { toast } = useToast();
+  const { push } = useRouter();
 
   return useMutation({
     mutationFn: () => {
@@ -82,10 +109,11 @@ export function useSignOut() {
       toast({
         title: 'Goodbye!!',
       });
+      push('/auth/sign-in');
     },
     onError: (error) => {
       if (axios.isAxiosError(error)) {
-        console.log(error)
+        console.log(error);
         toast({
           variant: 'destructive',
           title: `SignOut Failed`,
@@ -118,7 +146,7 @@ export function useVerify() {
           title: `Verify Failed`,
           description: `${error.response?.data.message}`,
         });
-        push('/auth/sign-in')
+        push('/auth/sign-in');
       }
     },
   });

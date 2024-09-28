@@ -4,3 +4,11 @@ export function formatPrice(price: number) {
     currency: 'IDR',
   }).format(price);
 }
+
+export function formatDate(dateString: string) {
+  return new Date(dateString).toLocaleDateString('id-ID', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}

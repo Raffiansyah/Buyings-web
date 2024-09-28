@@ -1,5 +1,8 @@
-import { SignInData, SignupData } from '../utils/type';
+import { getCookie } from 'cookies-next';
+import { SignInData, SignupData, UpdateUserData } from '../utils/type';
 import { axiosClient } from './axios';
+
+const token = getCookie('accessToken');
 
 export const SignIn = async ({ email, password }: SignInData) => {
   const user = axiosClient.post('/login', { email, password });
@@ -15,6 +18,21 @@ export const SignUp = async (data: SignupData) => {
     password: data.password,
   });
   return newUser;
+};
+
+export const UpdateUser = async (data: UpdateUserData) => {
+  const updatedUser = axiosClient.post('/user/update', {
+    email: data.email,
+    username: data.username,
+    first_name: data.firstname,
+    last_name: data.lastname,
+    phone: data.phone,
+  }, {
+    headers: {
+      'Authorization': `bearer ${token}` 
+    }
+  });
+  return updatedUser;
 };
 
 export const SignOut = async () => {

@@ -61,6 +61,8 @@ export default function Header() {
                 <Avatars
                   initialUsername={initialUsername}
                   avatarPath={avatarPath}
+                  size=''
+                  textSize=''
                 />
               </DropdownMenuTrigger>
               <DropdownMenuContent>

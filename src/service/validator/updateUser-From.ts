@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const signUpSchema = z.object({
+export const UpdateUserSchema = z.object({
   email: z.string().min(10, {
     message: 'Email must contain at least 10 character(s)',
   }),
@@ -13,12 +13,7 @@ export const signUpSchema = z.object({
   username: z.string().min(3, {
     message: 'Username must contain at least 3 character(s)',
   }),
-  password: z
-    .string()
-    .min(8, {
-      message: 'Password must contain at least 8 character(s)',
-    })
-    .max(15, {
-      message: 'Password must contain at most 15 character(s)',
-    }),
+  phone: z.string().min(12, {
+    message: 'Phone must contain at least 12 number(s)',
+  }),
 });
