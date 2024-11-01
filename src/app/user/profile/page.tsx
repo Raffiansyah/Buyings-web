@@ -42,11 +42,11 @@ export default function Profile() {
 
   async function onSubmit(values: z.infer<typeof UpdateUserSchema>) {
     UpdateUserMutation({
-      firstname: values.firstName,
-      lastname: values.lastName,
-      username: values.username,
-      email: values.email,
-      phone: values.phone,
+      firstname: values.firstName || '',
+      lastname: values.lastName || '',
+      username: values.username || '',
+      email: values.email || '',
+      phone: values.phone || '',
     });
   }
 
@@ -70,9 +70,9 @@ export default function Profile() {
               </Button>
             </div>
             <div className="text-center">
-              <h1 className="text-3xl font-bold">{`${data?.user_metadata.first_name} ${data?.user_metadata.last_name}`}</h1>
+              <h1 className="text-3xl font-bold">{`${data?.user_metadata?.first_name} ${data?.user_metadata?.last_name}`}</h1>
               <p className="text-muted-foreground">
-                {data?.user_metadata.username}
+                {data?.user_metadata?.username}
               </p>
               <p className="text-sm text-muted-foreground mt-2">
                 Role: {data?.role}
@@ -131,7 +131,7 @@ export default function Profile() {
                           <FormControl>
                             <Input
                               {...field}
-                              placeholder={data?.user_metadata.first_name}
+                              placeholder={data?.user_metadata?.first_name}
                               type="text"
                             />
                           </FormControl>
@@ -148,7 +148,7 @@ export default function Profile() {
                           <FormControl>
                             <Input
                               {...field}
-                              placeholder={data?.user_metadata.last_name}
+                              placeholder={data?.user_metadata?.last_name}
                               type="text"
                             />
                           </FormControl>
@@ -182,7 +182,7 @@ export default function Profile() {
                           <FormControl>
                             <Input
                               {...field}
-                              placeholder={data?.user_metadata.username}
+                              placeholder={data?.user_metadata?.username}
                               type="text"
                             />
                           </FormControl>

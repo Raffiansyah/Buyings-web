@@ -1,6 +1,6 @@
 import { getCookie } from 'cookies-next';
-import { SignInData, SignupData, UpdateUserData } from '../utils/type';
-import { axiosClient } from './axios';
+import { SignInData, SignupData, UpdateUserData } from './type';
+import { axiosClient } from '../lib/axios';
 
 const token = getCookie('accessToken');
 

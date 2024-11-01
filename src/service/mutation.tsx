@@ -1,8 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
 import { SignInData, SignupData, UpdateUserData } from '../utils/type';
-import { SignIn, SignOut, SignUp, UpdateUser, verifyOTP } from '~/lib/api';
+import { SignIn, SignOut, SignUp, UpdateUser, verifyOTP } from '~/utils/api';
 import { useDispatch } from 'react-redux';
-import { registerUser, signoutUser } from '~/store/(slice)/userSlice';
+import { registerUser, signoutUser, updateUser } from '~/store/(slice)/userSlice';
 import { useToast } from '~/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
 import { setCookie, deleteCookie } from 'cookies-next';
@@ -28,12 +28,12 @@ export function useSignIn() {
       push('/');
     },
     onError: (error) => {
+      console.log(error)
       if (axios.isAxiosError(error)) {
-        console.log(error);
         toast({
           variant: 'destructive',
           title: `Sign in Failed`,
-          description: `${error.response?.data.message}`,
+          description: `${error.response?.data.error}`,
         });
       }
     },
@@ -60,7 +60,7 @@ export function useSignUp() {
         toast({
           variant: 'destructive',
           title: `SignUp Failed`,
-          description: `${error.response?.data.message}`,
+          description: `${error.response?.data.error}`,
         });
       }
     },
@@ -77,7 +77,7 @@ export function useUpdateUser() {
     },
     onSuccess: (user) => {
       const userData = user
-      dispatch(registerUser(userData?.data.data))
+      dispatch(updateUser(userData?.data.data))
       toast({
         title: 'Update User Success',
       });
@@ -87,7 +87,7 @@ export function useUpdateUser() {
         toast({
           variant: 'destructive',
           title: `Update User Failed`,
-          description: `${error.response?.data.message}`,
+          description: `${error.response?.data.error}`,
         });
       }
     },
@@ -113,11 +113,10 @@ export function useSignOut() {
     },
     onError: (error) => {
       if (axios.isAxiosError(error)) {
-        console.log(error);
         toast({
           variant: 'destructive',
           title: `SignOut Failed`,
-          description: `${error.response?.data.message}`,
+          description: `${error.response?.data.error}`,
         });
       }
     },
@@ -144,7 +143,7 @@ export function useVerify() {
         toast({
           variant: 'destructive',
           title: `Verify Failed`,
-          description: `${error.response?.data.message}`,
+          description: `${error.response?.data.error}`,
         });
         push('/auth/sign-in');
       }

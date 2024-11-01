@@ -37,7 +37,7 @@ export default function Signin() {
         <h1 className="text-xl font-medium">Sign-In</h1>
         <p className="text-muted-foreground">
           Don&apos;t have an account?{' '}
-          <Link href="/auth/sign-up" className="text-black">
+          <Link href="/auth/sign-up" className="text-green-800">
             Sign-Up Here
           </Link>
         </p>

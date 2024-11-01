@@ -17,12 +17,13 @@ import {
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
 import { useSignOut } from '~/service/mutation';
+import { RootState } from '~/store/store';
 
 export default function Header() {
   const signOutMutation = useSignOut();
-  const { data } = useSelector((state: any) => state.user);
-  const initialUsername = data?.user_metadata?.username?.charAt(0);
-  const avatarPath = data?.user_metadata?.avatar_url;
+  const data = useSelector((state: RootState) => state.user.data);
+  const initialUsername = data?.user_metadata?.username.charAt(0) || "";
+  const avatarPath = data?.user_metadata?.avatar_url || "";
 
   function handleSignout() {
     signOutMutation.mutate();
@@ -69,9 +70,9 @@ export default function Header() {
                 <DropdownMenuLabel>
                   <div className="flex items-center justify-start gap-2 p-2">
                     <div className="flex flex-col space-y-1 leading-none">
-                      <p className="text-sm font-medium">{data.email}</p>
+                      <p className="text-sm font-medium">{data?.email}</p>
                       <p className="w-[200px] truncate text-xs text-muted-foreground">
-                        {data.user_metadata.username}
+                        {data?.user_metadata?.username}
                       </p>
                     </div>
                   </div>

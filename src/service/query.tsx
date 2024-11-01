@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getProducts } from "~/lib/api";
+import { getProducts } from "~/utils/api";
 
 export function useGetProducts(sort_by: string) {
     return useQuery({

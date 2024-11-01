@@ -4,5 +4,5 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 export const axiosClient = axios.create({
   baseURL: BASE_URL,
-  timeout: 5000,
+  timeout: 0,
 });
