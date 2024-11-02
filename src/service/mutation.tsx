@@ -28,7 +28,6 @@ export function useSignIn() {
       push('/');
     },
     onError: (error) => {
-      console.log(error)
       if (axios.isAxiosError(error)) {
         toast({
           variant: 'destructive',

@@ -1,7 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Calendar, Camera, Clock, Mail, Phone } from 'lucide-react';
+import { Calendar, Camera, Clock, Mail } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { z } from 'zod';
@@ -36,17 +36,15 @@ export default function Profile() {
       lastName: '',
       username: '',
       email: '',
-      phone: '',
     },
   });
 
   async function onSubmit(values: z.infer<typeof UpdateUserSchema>) {
     UpdateUserMutation({
-      firstname: values.firstName || '',
-      lastname: values.lastName || '',
-      username: values.username || '',
-      email: values.email || '',
-      phone: values.phone || '',
+      firstname: values.firstName || null,
+      lastname: values.lastName || null,
+      username: values.username || null,
+      email: values.email || null,
     });
   }
 
@@ -94,10 +92,6 @@ export default function Profile() {
                 <li className="flex items-center space-x-2">
                   <Mail className="text-primary" />
                   <span>{data?.email}</span>
-                </li>
-                <li className="flex items-center space-x-2">
-                  <Phone className="text-primary" />
-                  <span>{data?.phone || 'Belum diatur'}</span>
                 </li>
                 <li className="flex items-center space-x-2">
                   <Calendar className="text-primary" />
@@ -183,23 +177,6 @@ export default function Profile() {
                             <Input
                               {...field}
                               placeholder={data?.user_metadata?.username}
-                              type="text"
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="phone"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Phone</FormLabel>
-                          <FormControl>
-                            <Input
-                              {...field}
-                              placeholder={data?.phone || '+62...'}
                               type="text"
                             />
                           </FormControl>
