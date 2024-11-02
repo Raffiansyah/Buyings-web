@@ -26,7 +26,6 @@ export const UpdateUser = async (data: UpdateUserData) => {
     username: data.username,
     first_name: data.firstname,
     last_name: data.lastname,
-    phone: data.phone,
   }, {
     headers: {
       'Authorization': `bearer ${token}` 
