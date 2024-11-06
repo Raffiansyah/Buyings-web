@@ -18,12 +18,12 @@ export function useSignIn() {
       return SignIn(data);
     },
     onSuccess: (user) => {
-      const userData = user;
-      setCookie('accessToken', userData?.data.accessToken);
-      dispatch(registerUser(userData?.data.data));
+      const userData = user.data;
+      setCookie('accessToken', userData?.accessToken);
+      dispatch(registerUser(userData?.data));
       toast({
         title: 'SignIn Success',
-        description: `Welcome ${userData?.data.data.user_metadata.username}`,
+        description: `Welcome ${userData?.data.user_metadata.username}`,
       });
       push('/');
     },
@@ -75,8 +75,8 @@ export function useUpdateUser() {
       return UpdateUser(data)
     },
     onSuccess: (user) => {
-      const userData = user
-      dispatch(updateUser(userData?.data.data))
+      const userData = user.data.data
+      dispatch(updateUser(userData?.user))
       toast({
         title: 'Update User Success',
       });

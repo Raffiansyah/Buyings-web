@@ -21,10 +21,10 @@ export type SignInData = {
 };
 
 export type UpdateUserData = {
-  firstname: string | null;
-  lastname: string | null;
-  email: string | null;
-  username: string | null;
+  firstname?: string;
+  lastname?: string;
+  email?: string;
+  username?: string;
 };
 
 export interface userData {

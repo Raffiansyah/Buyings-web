@@ -39,12 +39,12 @@ export default function Profile() {
     },
   });
 
-  async function onSubmit(values: z.infer<typeof UpdateUserSchema>) {
+  async function handleUpdatemeta(values: z.infer<typeof UpdateUserSchema>) {
     UpdateUserMutation({
-      firstname: values.firstName || null,
-      lastname: values.lastName || null,
-      username: values.username || null,
-      email: values.email || null,
+      firstname: values.firstName,
+      lastname: values.lastName,
+      username: values.username,
+      email: values.email,
     });
   }
 
@@ -112,7 +112,7 @@ export default function Profile() {
             <CardContent className="pt-6">
               <Form {...form}>
                 <form
-                  onSubmit={form.handleSubmit(onSubmit)}
+                  onSubmit={form.handleSubmit(handleUpdatemeta)}
                   className="space-y-4"
                 >
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

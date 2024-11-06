@@ -21,12 +21,16 @@ export const SignUp = async (data: SignupData) => {
 };
 
 export const UpdateUser = async (data: UpdateUserData) => {
-  const updatedUser = axiosClient.post('/user/update', {
-    email: data.email,
-    username: data.username,
-    first_name: data.firstname,
-    last_name: data.lastname,
-  }, {
+  const payload = Object.entries(data).reduce((acc, [key, value]) => {
+    if (value !== undefined && value !== null && value !== '') {
+      const apiKey = key === 'firstname' ? 'first_name' : 
+                    key === 'lastname' ? 'last_name' : 
+                    key;
+      return { ...acc, [apiKey]: value };
+    }
+    return acc;
+  }, {});
+  const updatedUser = axiosClient.post('/user/update', payload, {
     headers: {
       'Authorization': `bearer ${token}` 
     }

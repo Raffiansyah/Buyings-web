@@ -68,7 +68,7 @@ export default function Signin() {
               </FormItem>
             )}
           />
-          <Button type="submit" disabled={isPending}>{isPending ? 'Loading' : 'Submit'}</Button>
+          <Button type="submit" disabled={isPending} className='bg-green-800'>{isPending ? 'Loading' : 'Submit'}</Button>
         </form>
       </Form>
     </div>
