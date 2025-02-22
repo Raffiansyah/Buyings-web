@@ -45,3 +45,20 @@ export interface userData {
   created_at: string;
   updated_at: string;
 }
+
+export interface addressData {
+  id?: string;
+  street?: string;
+  province?: string;
+  city?: string;
+  country?: string;
+  postalCode?: string;
+}
+
+export interface UpdateAddressData {
+  street?: string;
+  province?: string;
+  city?: string;
+  country?: string;
+  postalCode?: string;
+}

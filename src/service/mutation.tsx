@@ -1,8 +1,24 @@
 import { useMutation } from '@tanstack/react-query';
-import { SignInData, SignupData, UpdateUserData } from '../utils/type';
-import { SignIn, SignOut, SignUp, UpdateUser, verifyOTP } from '~/utils/api';
+import {
+  SignInData,
+  SignupData,
+  UpdateAddressData,
+  UpdateUserData,
+} from '../utils/type';
+import {
+  SignIn,
+  SignOut,
+  SignUp,
+  UpdateAddress,
+  UpdateUser,
+  verifyOTP,
+} from '~/utils/api';
 import { useDispatch } from 'react-redux';
-import { registerUser, signoutUser, updateUser } from '~/store/(slice)/userSlice';
+import {
+  registerUser,
+  signoutUser,
+  updateUser,
+} from '~/store/(slice)/userSlice';
 import { useToast } from '~/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
 import { setCookie, deleteCookie } from 'cookies-next';
@@ -72,13 +88,13 @@ export function useUpdateUser() {
 
   return useMutation({
     mutationFn: (data: UpdateUserData) => {
-      return UpdateUser(data)
+      return UpdateUser(data);
     },
     onSuccess: (user) => {
-      const userData = user.data.data
-      dispatch(updateUser(userData?.user))
+      const userData = user.data.data;
+      dispatch(updateUser(userData?.user));
       toast({
-        title: 'Update User Success',
+        title: 'Success to updating',
       });
     },
     onError: (error) => {
@@ -90,7 +106,7 @@ export function useUpdateUser() {
         });
       }
     },
-  })
+  });
 }
 
 export function useSignOut() {
@@ -145,6 +161,33 @@ export function useVerify() {
           description: `${error.response?.data.error}`,
         });
         push('/auth/sign-in');
+      }
+    },
+  });
+}
+
+export function useUpdateAddress() {
+  const { toast } = useToast();
+  const { push } = useRouter();
+
+  return useMutation({
+    mutationFn: ({ data, id }: { data: UpdateAddressData; id: string }) => {
+      console.log(`log from mutation: ${id}`)
+      return UpdateAddress(data, id);
+    },
+    onSuccess: () => {
+      toast({
+        title: 'Success to updating',
+      });
+      push('/user/profile');
+    },
+    onError: (error) => {
+      if (axios.isAxiosError(error)) {
+        toast({
+          variant: 'destructive',
+          title: `Update Failed`,
+          description: `${error.response?.data.error}`,
+        });
       }
     },
   });
