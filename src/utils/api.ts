@@ -44,8 +44,7 @@ export const getProducts = async (sortBy = '') => {
   return products.data.products;
 };
 
-export const getAddress = async () => {
-  console.log(token)
+export const getAddress = async () => {  
   const address = await axiosClient.get(`/address`, {
     headers: {
       Authorization: `bearer ${token}`,
