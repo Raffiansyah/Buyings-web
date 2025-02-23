@@ -1,8 +1,7 @@
-import { getCookie } from 'cookies-next';
 import { UpdateAddressData, SignInData, SignupData, UpdateUserData } from './type';
 import { axiosClient } from '../lib/axios';
+import { getAccessTokenClient } from './cookie';
 
-const token = getCookie('accessToken');
 
 export const SignIn = async ({ email, password }: SignInData) => {
   const user = axiosClient.post('/login', { email, password });
@@ -21,6 +20,7 @@ export const SignUp = async (data: SignupData) => {
 };
 
 export const UpdateUser = async (data: UpdateUserData) => {
+  const token = getAccessTokenClient()
   const updatedUser = axiosClient.post('/user/update', data, {
     headers: {
       Authorization: `bearer ${token}`,
@@ -44,7 +44,8 @@ export const getProducts = async (sortBy = '') => {
   return products.data.products;
 };
 
-export const getAddress = async () => {  
+export const getAddress = async () => {
+  const token = getAccessTokenClient()  
   const address = await axiosClient.get(`/address`, {
     headers: {
       Authorization: `bearer ${token}`,
@@ -54,6 +55,7 @@ export const getAddress = async () => {
 };
 
 export const UpdateAddress = async (data: UpdateAddressData, id: string) => {
+  const token = getAccessTokenClient()  
   const updateAddress = axiosClient.patch(`/address/${id}`, data, {
     headers: {
       Authorization: `bearer ${token}`,

@@ -21,8 +21,8 @@ import {
 } from '~/store/(slice)/userSlice';
 import { useToast } from '~/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
-import { setCookie, deleteCookie } from 'cookies-next';
 import axios from 'axios';
+import { removeAccessToken, setAccessToken } from '~/utils/cookie';
 
 export function useSignIn() {
   const dispatch = useDispatch();
@@ -35,7 +35,7 @@ export function useSignIn() {
     },
     onSuccess: (user) => {
       const userData = user.data;
-      setCookie('accessToken', userData?.accessToken);
+      setAccessToken(userData?.accessToken);
       dispatch(registerUser(userData?.data));
       toast({
         title: 'SignIn Success',
@@ -120,7 +120,7 @@ export function useSignOut() {
     },
     onSuccess: () => {
       dispatch(signoutUser());
-      deleteCookie('accessToken');
+      removeAccessToken();
       toast({
         title: 'Goodbye!!',
       });
@@ -172,7 +172,7 @@ export function useUpdateAddress() {
 
   return useMutation({
     mutationFn: ({ data, id }: { data: UpdateAddressData; id: string }) => {
-      console.log(`log from mutation: ${id}`)
+      console.log(`log from mutation: ${id}`);
       return UpdateAddress(data, id);
     },
     onSuccess: () => {
