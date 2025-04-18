@@ -5,16 +5,17 @@ import Header from '~/components/layouts/Header';
 import { StoreProvider } from '~/store/(provider)/StoreProvider';
 import { TanstackProvider } from '~/components/TanstackProvide';
 import { Toaster } from '~/components/ui/toaster';
+import Footer from '~/components/layouts/Footer';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Buyings',
   description: "Fashion Man's E-commerce",
   category: 'ecommerce',
-  authors: { name: 'Raffiansyah' },
+  authors: { name: 'Luxvuryy' },
   keywords: ['Next Js', 'Clothing', 'Shoes', 'Accessories', 'Fashion Mans'],
-  creator: 'Mohammad Raffiansyah',
-  publisher: 'Mohammad Raffiansyah',
+  creator: 'Luxvuryy',
+  publisher: 'Buyings',
 };
 export default function RootLayout({
   children,
@@ -32,6 +33,7 @@ export default function RootLayout({
             <Header />
             <main>{children}</main>
             <Toaster />
+            <Footer />
           </TanstackProvider>
         </StoreProvider>
       </body>

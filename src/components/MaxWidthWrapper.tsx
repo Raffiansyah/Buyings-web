@@ -9,7 +9,7 @@ export default function MaxWitdthWrapper({
     className?: string
 }>) {
     return (
-        <div className={cn('max-w-screen-xl container', className)}>
+        <div className={cn('container', className)}>
             {children}
         </div>
     )

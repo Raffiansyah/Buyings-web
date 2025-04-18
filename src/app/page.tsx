@@ -1,11 +1,16 @@
-import MaxWitdthWrapper from '~/components/MaxWidthWrapper';
+
+import HeroSection from '~/components/home/HeroSection';
+import ProdSection from '~/components/home/ProdSection';
+import DiscountSection from '~/components/home/DiscountSection';
 
 export default function Home() {
+  
+
   return (
     <main>
-      <MaxWitdthWrapper className='min-h-screen flex justify-center items-center'>
-        <div className="text-2xl">Let Me Cook🔊🔊 👨🏼‍🍳👨🏼‍🍳👨🏼‍💻👨🏼‍💻🤘🏼🤙🏼</div>
-      </MaxWitdthWrapper>
+      <HeroSection />
+      <ProdSection />
+      <DiscountSection />
     </main>
   );
 }

@@ -3,8 +3,8 @@
 import Image from 'next/image';
 import MaxWitdthWrapper from '../MaxWidthWrapper';
 import Link from 'next/link';
-import { Button } from '../ui/button';
-import { LogOut, Search, ShoppingBag, ShoppingCart, User } from 'lucide-react';
+import { Button, buttonVariants } from '../ui/button';
+import { LogOut, Search, ShoppingBag, Backpack, User } from 'lucide-react';
 import Avatars from './Avatars';
 import { useSelector } from 'react-redux';
 import {
@@ -31,15 +31,9 @@ export default function Header() {
 
   return (
     <nav className="sticky top-0 z-50 border-b bg-white">
-      <MaxWitdthWrapper className="py-1.5 flex justify-between text-center items-center">
+      <MaxWitdthWrapper className="py-2 flex justify-between text-center items-center">
         <div>
           <Link href={'/'} className="flex gap-x-1">
-            <Image
-              src={'/logo.svg'}
-              alt="Buyings Logo"
-              width={30}
-              height={20}
-            />
             <h1 className="text-3xl font-semibold">Buyings.</h1>
           </Link>
         </div>
@@ -54,7 +48,7 @@ export default function Header() {
             <span>Type Any Products Here</span>
           </Button>
           <Button variant={'ghost'} size={'sm'} className="gap-x-1">
-            <ShoppingCart className="w-4 h-4" aria-hidden="true" />0
+            <Backpack className="w-4 h-4" aria-hidden="true" />0
           </Button>
           {data ? (
             <DropdownMenu>
@@ -103,7 +97,7 @@ export default function Header() {
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <Link href="/auth/sign-in">Sign-In</Link>
+            <Link className={buttonVariants({ variant: 'default' })} href="/auth/sign-in">Sign-In</Link>
           )}
         </div>
       </MaxWitdthWrapper>
