@@ -11,7 +11,7 @@ export default function Sneakers() {
   const [products, setProducts] = useState<productType[]>([]);
   const [sortBy, setSortBy] = useState<string>('');
   const imageUrl = process.env.NEXT_PUBLIC_IMAGE_URL;
-  const { data, isLoading } = useGetProducts(sortBy);
+  const { data, isLoading } = useGetProducts(sortBy, 'sneakers');
 
   useEffect(() => {
     setProducts(data);
