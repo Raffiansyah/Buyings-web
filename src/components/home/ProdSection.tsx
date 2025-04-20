@@ -8,6 +8,16 @@ import { productType } from '~/utils/type';
 import { useEffect, useState } from 'react';
 import { useGetProducts } from '~/service/query';
 import CardComponent from '../layouts/CardComponent';
+import { motion } from 'motion/react';
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.4, ease: 'easeOut' },
+  },
+};
 
 export default function ProdSection() {
   const [products, setProducts] = useState<productType[]>([]);
@@ -40,12 +50,17 @@ export default function ProdSection() {
           </div>
         ) : (
           <div className="grid grid-cols-4 gap-2 justify-between items-center">
-            {products?.map((product: productType) => (
-              <CardComponent
-                product={product}
-                imageUrl={imageUrl}
+            {products?.map((product: productType, idx: number) => (
+              <motion.div
                 key={product.id}
-              />
+                variants={fadeInUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ delay: idx * 0.1 }}
+              >
+                <CardComponent product={product} imageUrl={imageUrl} />
+              </motion.div>
             ))}
           </div>
         )}
