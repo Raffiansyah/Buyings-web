@@ -21,7 +21,7 @@ const fadeInUp = {
 
 export default function ProdSection() {
   const [products, setProducts] = useState<productType[]>([]);
-  const { data, isLoading } = useGetProducts('product_desc');
+  const { data, isLoading } = useGetProducts('product_desc', 'sneakers');
   const imageUrl = process.env.NEXT_PUBLIC_IMAGE_URL;
 
   useEffect(() => {
