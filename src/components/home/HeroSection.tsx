@@ -63,7 +63,7 @@ export default function HeroSection() {
         >
           <Link
             className={buttonVariants({ variant: 'default' })}
-            href={'/sneakers'}
+            href={'/products/sneakers'}
           >
             Shop Collection
           </Link>

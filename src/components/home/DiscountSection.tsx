@@ -16,7 +16,7 @@ const fadeIn = {
 
 export default function DiscountSection() {
   return (
-    <section className="bg-gradient-to-b from-white to-black/20 p-14">
+    <section className="p-14">
       <MaxWitdthWrapper className="bg-primary rounded-2xl text-white py-20">
         <motion.div
           variants={fadeIn}

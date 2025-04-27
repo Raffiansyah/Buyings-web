@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import MaxWitdthWrapper from '../MaxWidthWrapper';
 import Link from 'next/link';
 import { Button, buttonVariants } from '../ui/button';
@@ -22,8 +21,8 @@ import { RootState } from '~/store/store';
 export default function Header() {
   const signOutMutation = useSignOut();
   const data = useSelector((state: RootState) => state.user.data);
-  const initialUsername = data?.user_metadata?.username.charAt(0) || "";
-  const avatarPath = data?.user_metadata?.avatar_url || "";
+  const initialUsername = data?.user_metadata?.username.charAt(0) || '';
+  const avatarPath = data?.user_metadata?.avatar_url || '';
 
   function handleSignout() {
     signOutMutation.mutate();
@@ -38,9 +37,18 @@ export default function Header() {
           </Link>
         </div>
         <div className="flex gap-x-5 justify-center text-lg">
-          <Link href={'/sneakers'}>Sneakers</Link>
-          <Link href={'/apparel'}>Apparel</Link>
-          <Link href={'/accessories'}>Accessories</Link>
+          <Link href={'/products/sneakers'} className="hover:underline">
+            Sneakers
+          </Link>
+          <Link href={'/products/loafers'} className="hover:underline">
+            Loafers
+          </Link>
+          <Link href={'/products/sleepers'} className="hover:underline">
+            Sleepers
+          </Link>
+          <Link href={'/products/boots'} className="hover:underline">
+            Boots
+          </Link>
         </div>
         <div className="flex justify-between gap-x-4  items-center text-lg">
           <Button variant={'ghost'}>
@@ -56,8 +64,8 @@ export default function Header() {
                 <Avatars
                   initialUsername={initialUsername}
                   avatarPath={avatarPath}
-                  size=''
-                  textSize=''
+                  size=""
+                  textSize=""
                 />
               </DropdownMenuTrigger>
               <DropdownMenuContent>
@@ -74,13 +82,13 @@ export default function Header() {
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                   <DropdownMenuItem>
-                    <Link href={'/user/profile'} className='flex'>
+                    <Link href={'/user/profile'} className="flex">
                       <User className="mr-2 h-4 w-4" aria-hidden="true" />
                       Profile
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
-                    <Link href={'/user/orders'} className='flex'>
+                    <Link href={'/user/orders'} className="flex">
                       <ShoppingBag
                         className="mr-2 h-4 w-4"
                         aria-hidden="true"
@@ -97,7 +105,12 @@ export default function Header() {
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <Link className={buttonVariants({ variant: 'default' })} href="/auth/sign-in">Sign-In</Link>
+            <Link
+              className={buttonVariants({ variant: 'default' })}
+              href="/auth/sign-in"
+            >
+              Sign-In
+            </Link>
           )}
         </div>
       </MaxWitdthWrapper>
