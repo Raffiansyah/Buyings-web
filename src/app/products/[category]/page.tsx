@@ -1,11 +1,12 @@
 'use client';
 
-import { productType } from '~/utils/type';
 import CardComponent from '~/components/layouts/CardComponent';
 import Combobox from '~/components/layouts/Combobox';
-import { useEffect, useState } from 'react';
-import { useGetProducts } from '~/service/query';
+import { useState } from 'react';
+import { useGetInfiniteProducts } from '~/service/query';
 import Link from 'next/link';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { LoaderCircle } from 'lucide-react';
 
 type Params = {
   params: {
@@ -15,25 +16,32 @@ type Params = {
 
 export default function Sneakers({ params }: Params) {
   const { category } = params;
-  const [products, setProducts] = useState<productType[]>([]);
   const [sortBy, setSortBy] = useState<string>('');
   const imageUrl = process.env.NEXT_PUBLIC_IMAGE_URL;
-  const { data, isLoading } = useGetProducts(sortBy, category);  
+  const { data, hasNextPage, fetchNextPage, isLoading } =
+    useGetInfiniteProducts(sortBy, category);
 
-  useEffect(() => {
-    setProducts(data);
-  }, [data]);
+  const products = data?.pages.reduce((prev, page) => {
+    return [...prev, ...page]
+  }, [])
 
   return (
     <div className="py-10 container min-h-screen">
       {products?.length != 0 ? (
         <>
           <Combobox setSortBy={setSortBy} />
-          <CardComponent
-            products={products}
-            imageUrl={imageUrl}
-            isLoading={isLoading}
-          />
+          <InfiniteScroll
+            dataLength={products ? products?.length : 0}
+            next={() => fetchNextPage()}
+            hasMore={hasNextPage}
+            loader={<LoaderCircle />}
+          >
+            <CardComponent
+              products={products}
+              imageUrl={imageUrl}
+              isLoading={isLoading}
+            />
+          </InfiniteScroll>
         </>
       ) : (
         <div className="flex flex-col items-center justify-center min-h-screen text-center">

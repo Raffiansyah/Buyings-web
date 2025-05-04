@@ -39,8 +39,8 @@ export const verifyOTP = async (hashToken: string) => {
   return verify;
 };
 
-export const getProducts = async (sortBy = '', category = '') => {
-  const products = await axiosClient.get(`/products?sort_by=${sortBy}&Category=${category}`);
+export const getProducts = async (sortBy: string, category: string, pageParam: number) => {
+  const products = await axiosClient.get(`/products?sort_by=${sortBy}&Category=${category}&Page=${pageParam}`);
   return products.data.products;
 };
 
